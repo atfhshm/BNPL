@@ -1,15 +1,33 @@
-from django.urls import path
+from django.urls import include, path
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularRedocView,
     SpectacularSwaggerView,
 )
 
+from apps.api.v1.auth.urls import (
+    customer_auth_router,
+    merchant_auth_router,
+)
+
 urlpatterns = [
-    # path('auth/'),
     # path('admins/'),
-    # path('merchants/'),
-    # path('customers/'),
+    path(
+        'merchants/',
+        include(
+            [
+                path('auth/', include(merchant_auth_router.urls)),
+            ]
+        ),
+    ),
+    path(
+        'customers/',
+        include(
+            [
+                path('auth/', include(customer_auth_router.urls)),
+            ]
+        ),
+    ),
 ]
 
 

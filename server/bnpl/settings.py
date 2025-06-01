@@ -167,6 +167,7 @@ AUTH_USER_MODEL = 'user.User'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
+    'bnpl.auth_backends.AuthBackend',
 ]
 # DRF settings
 REST_FRAMEWORK = {

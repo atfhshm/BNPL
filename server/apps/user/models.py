@@ -68,6 +68,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         db_index=True,
     )
 
+    @property
+    def is_customer(self) -> bool:
+        return self.user_type == self.UserType.CUSTOMER
+
+    @property
+    def is_merchant(self) -> bool:
+        return self.user_type == self.UserType.MERCHANT
+
     EMAIL_FIELD: str = 'email'
     USERNAME_FIELD: str = 'email'
     REQUIRED_FIELDS: list[str] = ['first_name', 'last_name', 'phone_number']
