@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Upcoming Installment Reminder{% endblock title %}
+
+{% block styles %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+    }
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    .header {
+        color: #007bff;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    .details {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 20px 0;
+    }
+</style>
+{% endblock styles %}
+
+{% block content %}
+<div class="container">
+    <h1 class="header">Upcoming Installment Reminder</h1>
+
+    <p>Dear {{ customer_name }},</p>
+
+    <p>This is a friendly reminder that you have an upcoming installment payment due in 3 days.</p>
+
+    <div class="details">
+        <p><strong>Payment Plan:</strong> {{ payment_plan_name }}</p>
+        <p><strong>Amount Due:</strong> {{ amount }}</p>
+        <p><strong>Due Date:</strong> {{ due_date }}</p>
+    </div>
+
+    <p>Please ensure that you have sufficient funds available for the payment.</p>
+
+    <p>If you have already made the payment, please disregard this reminder.</p>
+
+    <p>Best regards,<br>Your BNPL Team</p>
+</div>
+{% endblock content %}

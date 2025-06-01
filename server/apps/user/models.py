@@ -46,7 +46,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         choices=UserType.choices,
         default=UserType.STAFF,
     )
-    # pyrefly: ignore
     is_active = models.BooleanField(
         _('active status'),
         default=True,
@@ -82,7 +81,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects: UserManager = UserManager()
 
-    class Meta:  # pyrefly: ignore
+    class Meta:
         db_table = 'users'
         verbose_name = _('user')
         verbose_name_plural = _('users')

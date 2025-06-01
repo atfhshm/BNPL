@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'djmoney',
     # local
     'apps.user.apps.UserConfig',
-    'apps.payment.apps.PaymentConfig',
+    'apps.payment_plan.apps.PaymentPlanConfig',
     'apps.installment.apps.InstallmentConfig',
 ]
 
@@ -91,6 +91,8 @@ DATABASES = {
         'PORT': env('DB_PORT'),
     }
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Redis
 REDIS_URL: str = env('REDIS_URL', cast=str, default='redis://redis:6379')

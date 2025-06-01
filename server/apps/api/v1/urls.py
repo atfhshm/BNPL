@@ -9,6 +9,10 @@ from apps.api.v1.auth.urls import (
     customer_auth_router,
     merchant_auth_router,
 )
+from apps.api.v1.user.urls import (
+    customer_router,
+    merchant_router,
+)
 
 urlpatterns = [
     # path('admins/'),
@@ -17,6 +21,7 @@ urlpatterns = [
         include(
             [
                 path('auth/', include(merchant_auth_router.urls)),
+                path('', include(merchant_router.urls)),
             ]
         ),
     ),
@@ -25,6 +30,7 @@ urlpatterns = [
         include(
             [
                 path('auth/', include(customer_auth_router.urls)),
+                path('', include(customer_router.urls)),
             ]
         ),
     ),

@@ -9,7 +9,6 @@ admin.site.register(Permission)
 
 @admin.register(User)
 class UserAdminConfig(UserAdmin):
-    # pyrefly: ignore
     list_display = (
         'id',
         'email',
@@ -21,13 +20,13 @@ class UserAdminConfig(UserAdmin):
         'last_login',
         'user_type',
     )
-    # pyrefly: ignore
+
     readonly_fields = [
         'date_joined',
         'updated_at',
         'last_login',
     ]
-    # pyrefly: ignore
+
     fieldsets = (
         (
             'basic info',
@@ -72,7 +71,7 @@ class UserAdminConfig(UserAdmin):
             },
         ),
     )
-    # pyrefly: ignore
+
     add_fieldsets = (
         (
             None,
@@ -95,26 +94,26 @@ class UserAdminConfig(UserAdmin):
             },
         ),
     )
-    # pyrefly: ignore
+
     list_filter = (
         'is_active',
         'is_staff',
         'is_superuser',
         'user_type',
     )
-    # pyrefly: ignore
+
     search_fields = (
         'email',
         'phone_number',
         'first_name',
         'last_name',
     )
-    # pyrefly: ignore
+
     filter_horizontal = [
         'groups',
         'user_permissions',
     ]
-    # pyrefly: ignore
+
     ordering = (
         '-id',
         'email',

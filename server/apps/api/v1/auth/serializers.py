@@ -4,6 +4,7 @@ from rest_framework import serializers, status
 from rest_framework.validators import UniqueValidator
 
 from apps.user.models import User
+from django.utils.translation import gettext_lazy as _
 
 
 class TokenObtainPairSerializer(serializers.Serializer):
@@ -40,7 +41,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         validators=[
             UniqueValidator(
                 queryset=User.objects.all(),
-                message='A user with that phone number already exists.',
+                message=_('A user with that phone number already exists.'),
             ),
         ],
     )
