@@ -35,3 +35,15 @@ format:
 .PHONY: lint
 lint:
 	uv run ruff check .
+
+.PHONY: celery
+celery:
+	uv run celery -A bnpl worker -l info
+
+.PHONY: celery-beat
+celery-beat:
+	uv run celery -A bnpl beat -l info
+
+.PHONY: celery+beat
+celery+beat:
+	uv run celery -A bnpl worker --pool=prefork --beat -l info
