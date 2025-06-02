@@ -10,3 +10,12 @@ class InstallmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Installments
         fields = '__all__'
+
+
+class InstallmentUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Installments
+        fields = (
+            'status',
+            'paid_date',
+        )
