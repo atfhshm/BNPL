@@ -75,7 +75,7 @@ class MerchantAuthView(GenericViewSet):
             request, login_term=login_term, password=password
         )
         if user:
-            if not user.is_customer:
+            if not user.is_merchant:
                 return Response(
                     data={'detail': 'Invalid credentials'},
                     status=status.HTTP_401_UNAUTHORIZED,

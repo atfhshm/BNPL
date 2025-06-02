@@ -8,6 +8,7 @@ from apps.user.models import User
 class PaymentPlanSerializer(serializers.ModelSerializer):
     customer = UserSerializer()
     merchant = UserSerializer()
+    no_of_paid_installments = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = PaymentPlan
@@ -18,9 +19,6 @@ class CreatePaymentPlanSerializer(serializers.ModelSerializer):
     customer = serializers.PrimaryKeyRelatedField(
         queryset=User.objects.filter(user_type=User.UserType.CUSTOMER)
     )
-    merchant = serializers.PrimaryKeyRelatedField(
-        queryset=User.objects.filter(user_type=User.UserType.MERCHANT)
-    )
 
     class Meta:
         model = PaymentPlan
@@ -28,4 +26,6 @@ class CreatePaymentPlanSerializer(serializers.ModelSerializer):
             'name',
             'total_amount',
             'no_of_installments',
+            'customer',
+            'start_date',
         )

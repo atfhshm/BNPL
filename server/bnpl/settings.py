@@ -93,6 +93,7 @@ DATABASES = {
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 
 # Redis
 REDIS_URL: str = env('REDIS_URL', cast=str, default='redis://redis:6379')
