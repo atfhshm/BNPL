@@ -13,6 +13,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import type { Route } from "./+types/root";
 import "./app.css";
 import { ThemeProvider } from "./hooks/use-theme";
+import { Toaster } from "sonner";
 
 export const links: Route.LinksFunction = () => [
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -56,8 +57,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     }}
                 />
             </head>
-            <body className="bg-background text-foreground">
-                {children}
+            <body className=" w-full">
+                <div className="bg-background text-foreground">{children}</div>
                 <ScrollRestoration />
                 <Scripts />
             </body>
@@ -72,10 +73,11 @@ export default function App() {
         <QueryClientProvider client={queryClient}>
             <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
                 <Outlet />
+                {import.meta.env.DEV && (
+                    <ReactQueryDevtools initialIsOpen={false} />
+                )}
+                <Toaster position="bottom-right" />
             </ThemeProvider>
-            {import.meta.env.DEV && (
-                <ReactQueryDevtools initialIsOpen={false} />
-            )}
         </QueryClientProvider>
     );
 }
