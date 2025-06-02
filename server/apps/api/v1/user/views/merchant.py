@@ -49,14 +49,12 @@ class MerchantView(
     )
     def me(self, request, *args, **kwargs):
         if request.method == 'GET':
-            user = User.objects.filter(
-                pk=self.request.user.pk,
-            ).first()
+            user = self.request.user
             serializer = UserSerializer(instance=user)
             return Response(serializer.data)
 
         elif request.method == 'PATCH':
-            user = request.user
+            user = self.request.user
             serializer = UserSerializer(
                 instance=user,
                 data=request.data,
@@ -67,7 +65,7 @@ class MerchantView(
             return Response(serializer.data)
 
         elif request.method == 'DELETE':
-            user = request.user
+            user = self.request.user
             user.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
 
