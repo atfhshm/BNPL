@@ -27,7 +27,7 @@ class CustomerInstallmentView(
     serializer_class = InstallmentSerializer
     pagination_class = PagePaginator
     permission_classes = (IsAuthenticated, IsCustomer)
-    http_method_names = ('get', 'post', 'delete')
+    http_method_names = ('get', 'post', 'delete', 'patch')
 
     def get_queryset(self):
         return (

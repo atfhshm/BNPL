@@ -73,11 +73,12 @@ class MerchantPaymentPlanView(
         )
         if existing_installments.exists():
             raise ValidationError(
-                {
-                    'detail': _(
-                        'This payment plan already has paid or overdue installments'
-                    ),
-                }
+                code=status.HTTP_403_FORBIDDEN,
+                detail={
+                    'id': [
+                        _('This payment plan already has paid or overdue installments')
+                    ]
+                },
             )
         super().perform_destroy(instance)
 
