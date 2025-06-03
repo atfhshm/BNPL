@@ -104,12 +104,6 @@ class AuthView(GenericViewSet):
             request, login_term=login_term, password=password
         )
         if user:
-            if not user.is_customer:
-                return Response(
-                    data={'detail': 'Invalid credentials'},
-                    status=status.HTTP_401_UNAUTHORIZED,
-                )
-
             tokens: dict[str, str] = get_tokens(user)
             tokens_serializer = TokenPairSerializer(instance=tokens)
             return Response(data=tokens_serializer.data, status=status.HTTP_200_OK)
