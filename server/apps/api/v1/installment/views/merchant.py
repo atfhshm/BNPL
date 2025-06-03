@@ -1,6 +1,6 @@
 from datetime import date
 
-from django.db.models import Q, Sum
+from django.db.models import Count, Q, Sum
 from django.utils import timezone
 from drf_spectacular.utils import extend_schema
 from rest_framework import status
@@ -11,7 +11,6 @@ from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from apps.api.v1.installment.serializers import (
-    InstallmentAnalyticsSerializer,
     InstallmentSerializer,
 )
 from apps.installment.models import Installments
@@ -106,7 +105,7 @@ class MerchantInstallmentView(
         merchant = request.user
         today = timezone.now().date()
 
-        # Numerical Analytics
+        # 1. Calculate Numerical Analytics
         installments = Installments.objects.filter(
             payment_plan__merchant=merchant
         ).select_related('payment_plan')
@@ -137,41 +136,32 @@ class MerchantInstallmentView(
             or 0,
         }
 
-        # Date Analytics (for the current year)
-        current_year_start = today.replace(day=1, month=1)
-        current_year_end = today.replace(day=31, month=12)
+        # 2. Calculate Date Analytics for the current year
+        year_start = today.replace(day=1, month=1)
+        year_end = today.replace(day=31, month=12)
 
-        date_data = {
-            'date': today,
-            'paid_number': installments.filter(
-                status=Installments.Status.PAID,
-                paid_date__range=[current_year_start, current_year_end],
-            ).count(),
-            'paid_amount': installments.filter(
-                status=Installments.Status.PAID,
-                paid_date__range=[current_year_start, current_year_end],
-            ).aggregate(total=Sum('amount'))['total']
-            or 0,
-        }
-
-        # Upcoming Installments
-        upcoming_installments = (
-            installments.select_related(
-                'payment_plan__merchant',
-                'payment_plan__customer',
+        date_analytics = (
+            installments.filter(
+                status=Installments.Status.PAID, paid_date__range=[year_start, year_end]
             )
-            .filter(status=Installments.Status.PENDING, due_date__gte=today)
-            .order_by('-due_date')
+            .values('paid_date')
+            .annotate(paid_number=Count('id'), paid_amount=Sum('amount'))
+            .order_by('paid_date')
         )
+        print(len(date_analytics))
+
+        # 3. Get All Upcoming Installments
+        upcoming_installments = installments.filter(
+            status=Installments.Status.PENDING, due_date__gte=today
+        ).order_by('due_date')
 
         # Prepare the response data
         analytics_data = {
             'numerical_analytics': numerical_data,
-            'date_analytics': date_data,
+            'date_analytics': date_analytics,
             'upcoming_installments': InstallmentSerializer(
-                upcoming_installments, many=True
+                upcoming_installments, many=True, context={'request': request}
             ).data,
         }
 
-        serializer = InstallmentAnalyticsSerializer(analytics_data)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(analytics_data, status=status.HTTP_200_OK)
