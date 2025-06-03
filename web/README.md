@@ -1,35 +1,54 @@
-# Welcome to React Router!
+# BNPL Web Application
 
-A modern, production-ready template for building full-stack React applications using React Router.
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+A modern, production-ready web application for Buy Now Pay Later services built with React and React Router.
 
 ## Features
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- 🚀 Server-side rendering with React Router
+- ⚡️ Hot Module Replacement (HMR) for rapid development
+- 📦 Optimized asset bundling with Vite
+- 🎨 Modern UI components with Radix UI
+- 📊 Data visualization with Recharts
+- 🔄 State management with Zustand
+- 📝 Form handling with React Hook Form and Zod validation
+- 🔒 TypeScript for type safety
+- 🎨 TailwindCSS for styling
+- 📱 Responsive design
+- 🌙 Dark mode support with next-themes
+
+## Tech Stack
+
+- **Frontend Framework**: React 19 with React Router 7
+- **UI Components**: Radix UI
+- **Styling**: TailwindCSS
+- **State Management**: Zustand
+- **Data Fetching**: TanStack Query (React Query)
+- **Form Handling**: React Hook Form with Zod validation
+- **HTTP Client**: Axios
+- **Build Tool**: Vite
+- **Type Checking**: TypeScript
 
 ## Getting Started
+
+### Prerequisites
+
+- Node.js (Latest LTS version recommended)
+- pnpm (Package manager)
 
 ### Installation
 
 Install the dependencies:
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### Development
 
-Start the development server with HMR:
+Start the development server:
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 Your application will be available at `http://localhost:5173`.
@@ -39,20 +58,18 @@ Your application will be available at `http://localhost:5173`.
 Create a production build:
 
 ```bash
-npm run build
+pnpm build
 ```
 
-## Deployment
+## Docker Deployment
 
-### Docker Deployment
-
-To build and run using Docker:
+Build and run using Docker:
 
 ```bash
-docker build -t my-app .
+docker build -t bnpl-web .
 
 # Run the container
-docker run -p 3000:3000 my-app
+docker run -p 3000:3000 bnpl-web
 ```
 
 The containerized application can be deployed to any platform that supports Docker, including:
@@ -64,13 +81,9 @@ The containerized application can be deployed to any platform that supports Dock
 - Fly.io
 - Railway
 
-### DIY Deployment
+## Project Structure
 
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
+```sh
 ├── package.json
 ├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
 ├── build/
@@ -84,4 +97,4 @@ This template comes with [Tailwind CSS](https://tailwindcss.com/) already config
 
 ---
 
-Built with ❤️ using React Router.
+Built with ❤️
