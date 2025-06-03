@@ -1,16 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import Dashboard from "~/features/dashboard/components";
-import { getCustomerAnalytics } from "~/features/dashboard/services/customer";
-import type { DashboardData } from "~/features/dashboard/components";
+import { getDashboardAnalytics } from "~/features/dashboard/services/customer";
+import { useUserStore } from "~/stores/user-store";
 
 export default function CustomerDashboard() {
-    const { data, isLoading } = useQuery({
-        queryKey: ["customer-dashboard"],
-        queryFn: getCustomerAnalytics,
+    const { user } = useUserStore();
+    const { data, isPending } = useQuery({
+        queryKey: ["dashboard", user?.user_type],
+        queryFn: () => getDashboardAnalytics(user!.user_type),
+        enabled: !!user,
     });
 
-    if (isLoading) return <div>Loading...</div>;
-    if (!data?.data) return null;
+    if (isPending) return <div>Loading...</div>;
+    if (!data) return null;
 
-    return <Dashboard data={data.data} />;
+    return <Dashboard data={data} />;
 }

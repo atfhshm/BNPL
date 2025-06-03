@@ -10,12 +10,15 @@ import {
 } from "~/components/ui/sidebar";
 import { NavGroup } from "~/components/layouts/nav-group";
 import { NavUser } from "~/components/layouts/nav-user";
-import { sidebarData } from "./data/sidebar-data";
+import { getSidebarData } from "./data/sidebar-data";
 import { ArrowUpCircleIcon } from "lucide-react";
 import { useUserStore } from "~/stores/user-store";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const { user } = useUserStore();
+    const sidebarData = getSidebarData(
+        user?.user_type === "merchant" ? "merchant" : "customer"
+    );
     return (
         <Sidebar collapsible="icon" variant="floating" {...props}>
             <SidebarHeader>

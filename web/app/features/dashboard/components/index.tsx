@@ -5,13 +5,12 @@ import { ThemeSwitch } from "~/components/theme-switcher";
 import {
     Card,
     CardContent,
-    CardDescription,
     CardHeader,
-    CardTitle,
+    CardTitle
 } from "~/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
-import StatCards from "./stat-cards";
 import { Overview } from "./overview";
+import StatCards from "./stat-cards";
 import { UpcomingInstallments } from "./upcoming-installments";
 
 export interface DashboardData {

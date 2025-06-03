@@ -16,14 +16,19 @@ import {
     CommandList,
     CommandSeparator,
 } from "~/components/ui/command";
-import { sidebarData } from "~/components/layouts/data/sidebar-data";
+import { getSidebarData } from "~/components/layouts/data/sidebar-data";
 import { ScrollArea } from "./ui/scroll-area";
 import { useNavigate } from "react-router";
+import { useUserStore } from "~/stores/user-store";
 
 export function CommandMenu() {
     const navigate = useNavigate();
     const { setTheme } = useTheme();
     const { open, setOpen } = useSearch();
+    const { user } = useUserStore();
+    const sidebarData = getSidebarData(
+        user?.user_type === "merchant" ? "merchant" : "customer"
+    );
 
     const runCommand = React.useCallback(
         (command: () => unknown) => {
