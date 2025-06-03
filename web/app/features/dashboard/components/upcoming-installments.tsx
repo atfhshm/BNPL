@@ -1,93 +1,63 @@
-import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
+import { Avatar, AvatarFallback } from "~/components/ui/avatar";
 
-export function UpcomingInstallments() {
+interface Customer {
+    id: number;
+    first_name: string;
+    last_name: string;
+    email: string;
+}
+
+interface PaymentPlan {
+    id: number;
+    customer: Customer;
+    name: string;
+}
+
+interface Installment {
+    id: number;
+    payment_plan: PaymentPlan;
+    amount: string;
+    amount_currency: string;
+    due_date: string;
+    status: string;
+}
+
+interface UpcomingInstallmentsProps {
+    data: Installment[];
+}
+
+export function UpcomingInstallments({ data }: UpcomingInstallmentsProps) {
     return (
         <div className="space-y-8">
-            <div className="flex items-center gap-4">
-                <Avatar className="h-9 w-9">
-                    <AvatarFallback>OM</AvatarFallback>
-                </Avatar>
-                <div className="flex flex-1 flex-wrap items-center justify-between">
-                    <div className="space-y-1">
-                        <p className="text-sm leading-none font-medium">
-                            Olivia Martin
-                        </p>
-                        <p className="text-muted-foreground text-sm">
-                            olivia.martin@email.com
-                        </p>
-                    </div>
-                    <div className="font-medium">+$1,999.00</div>
-                </div>
-            </div>
-            <div className="flex items-center gap-4">
-                <Avatar className="flex h-9 w-9 items-center justify-center space-y-0 border">
-                    <AvatarFallback>JL</AvatarFallback>
-                </Avatar>
-                <div className="flex flex-1 flex-wrap items-center justify-between">
-                    <div className="space-y-1">
-                        <p className="text-sm leading-none font-medium">
-                            Jackson Lee
-                        </p>
-                        <p className="text-muted-foreground text-sm">
-                            jackson.lee@email.com
-                        </p>
-                    </div>
-                    <div className="font-medium">+$39.00</div>
-                </div>
-            </div>
-            <div className="flex items-center gap-4">
-                <Avatar className="h-9 w-9">
-                    <AvatarImage src="" alt="Avatar" />
-                    <AvatarFallback>IN</AvatarFallback>
-                </Avatar>
-                <div className="flex flex-1 flex-wrap items-center justify-between">
-                    <div className="space-y-1">
-                        <p className="text-sm leading-none font-medium">
-                            Isabella Nguyen
-                        </p>
-                        <p className="text-muted-foreground text-sm">
-                            isabella.nguyen@email.com
-                        </p>
-                    </div>
-                    <div className="font-medium">+$299.00</div>
-                </div>
-            </div>
+            {data.map((installment) => {
+                const { customer } = installment.payment_plan;
+                const initials = `${customer.first_name[0]}${customer.last_name[0]}`;
 
-            <div className="flex items-center gap-4">
-                <Avatar className="h-9 w-9">
-                    <AvatarImage src="" alt="Avatar" />
-                    <AvatarFallback>WK</AvatarFallback>
-                </Avatar>
-                <div className="flex flex-1 flex-wrap items-center justify-between">
-                    <div className="space-y-1">
-                        <p className="text-sm leading-none font-medium">
-                            William Kim
-                        </p>
-                        <p className="text-muted-foreground text-sm">
-                            will@email.com
-                        </p>
+                return (
+                    <div
+                        key={installment.id}
+                        className="flex items-center gap-4"
+                    >
+                        <Avatar className="h-9 w-9">
+                            <AvatarFallback>{initials}</AvatarFallback>
+                        </Avatar>
+                        <div className="flex flex-1 flex-wrap items-center justify-between">
+                            <div className="space-y-1">
+                                <p className="text-sm leading-none font-medium">
+                                    {customer.first_name} {customer.last_name}
+                                </p>
+                                <p className="text-muted-foreground text-sm">
+                                    {customer.email}
+                                </p>
+                            </div>
+                            <div className="font-medium">
+                                {installment.amount}{" "}
+                                {installment.amount_currency}
+                            </div>
+                        </div>
                     </div>
-                    <div className="font-medium">+$99.00</div>
-                </div>
-            </div>
-
-            <div className="flex items-center gap-4">
-                <Avatar className="h-9 w-9">
-                    <AvatarImage src="" alt="Avatar" />
-                    <AvatarFallback>SD</AvatarFallback>
-                </Avatar>
-                <div className="flex flex-1 flex-wrap items-center justify-between">
-                    <div className="space-y-1">
-                        <p className="text-sm leading-none font-medium">
-                            Sofia Davis
-                        </p>
-                        <p className="text-muted-foreground text-sm">
-                            sofia.davis@email.com
-                        </p>
-                    </div>
-                    <div className="font-medium">+$39.00</div>
-                </div>
-            </div>
+                );
+            })}
         </div>
     );
 }
