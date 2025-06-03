@@ -71,7 +71,11 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
                 setTokens(data.data);
                 const { data: user } = await getCurrentUserRequest();
                 setUser(user);
-                navigate("/");
+                const path =
+                    user.user_type === UserType.MERCHANT
+                        ? "/merchants"
+                        : "/customers";
+                navigate(path);
                 toast.success("Merchant account created successfully");
             },
             onError: handleError,
@@ -101,7 +105,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
         <Tabs defaultValue={UserType.CUSTOMER} className="w-full">
             <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value={UserType.CUSTOMER}>Customer</TabsTrigger>
-                <TabsTrigger value={UserType.ADMIN}>Merchant</TabsTrigger>
+                <TabsTrigger value={UserType.MERCHANT}>Merchant</TabsTrigger>
             </TabsList>
             <TabsContent value={UserType.CUSTOMER}>
                 <Form {...form}>
@@ -119,11 +123,11 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
                     </form>
                 </Form>
             </TabsContent>
-            <TabsContent value={UserType.ADMIN}>
+            <TabsContent value={UserType.MERCHANT}>
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit((data) =>
-                            onSubmit(data, UserType.ADMIN)
+                            onSubmit(data, UserType.MERCHANT)
                         )}
                         className={cn("grid gap-3", className)}
                         {...props}
@@ -143,34 +147,33 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 function FormFields({ form }: { form: any }) {
     return (
         <>
-            <div className="grid grid-cols-2 gap-3">
-                <FormField
-                    control={form.control}
-                    name="first_name"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>First Name</FormLabel>
-                            <FormControl>
-                                <Input placeholder="John" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="last_name"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Last Name</FormLabel>
-                            <FormControl>
-                                <Input placeholder="Doe" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-            </div>
+            <FormField
+                control={form.control}
+                name="first_name"
+                render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>First Name</FormLabel>
+                        <FormControl>
+                            <Input placeholder="John" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
+                )}
+            />
+            <FormField
+                control={form.control}
+                name="last_name"
+                render={({ field }) => (
+                    <FormItem>
+                        <FormLabel>Last Name</FormLabel>
+                        <FormControl>
+                            <Input placeholder="Doe" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
+                )}
+            />
+
             <FormField
                 control={form.control}
                 name="email"

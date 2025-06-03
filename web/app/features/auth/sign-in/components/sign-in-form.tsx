@@ -22,6 +22,7 @@ import { signInSchema, type SignInFormSchema } from "../../schemas";
 import { useMutation } from "@tanstack/react-query";
 import { getCurrentUserRequest, signInRequest } from "../../services";
 import { useUserStore } from "~/stores/user-store";
+import { UserType } from "~/types/auth";
 
 type SignInFormProps = HTMLAttributes<HTMLFormElement>;
 
@@ -43,7 +44,11 @@ export function SignInForm({ className, ...props }: SignInFormProps) {
             setTokens(data.data);
             const { data: user } = await getCurrentUserRequest();
             setUser(user);
-            navigate("/");
+            const path =
+                user.user_type === UserType.MERCHANT
+                    ? "/merchants"
+                    : "/customers";
+            navigate(path);
             toast.success("Login successful");
         },
         onError: (error) => {

@@ -13,10 +13,10 @@ export const signUpSchema = z
     .object({
         first_name: z
             .string()
-            .min(1, { message: "Please enter your first name" }),
+            .min(3, { message: "Please enter your first name, at least 3 characters" }),
         last_name: z
             .string()
-            .min(1, { message: "Please enter your last name" }),
+            .min(3, { message: "Please enter your last name, at least 3 characters" }),
         email: z
             .string()
             .email({ message: "Please enter a valid email address" }),

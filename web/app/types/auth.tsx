@@ -10,7 +10,7 @@ export interface ITokenResponse {
 
 export enum UserType {
     CUSTOMER = "customer",
-    ADMIN = "admin",
+    MERCHANT = "merchant",
 }
 
 export interface IUser {
